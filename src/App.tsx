@@ -3,13 +3,16 @@ import './App.css';
 import NestedCheckBox from './pages/NestedCheckBox';
 import { nestedCheckboxData } from "./data/checkboxData";
 import type { NestedCheckBoxData } from './data/types';
+import { addInputStatus } from "./util";
 
 const App = () => {
-  const [state, setState] = useState<NestedCheckBoxData[]>([...nestedCheckboxData])
+  const [state, setState] = useState<NestedCheckBoxData[]>(addInputStatus([...nestedCheckboxData]))
+
+  console.log(state)
 
   return (
-    <div className="content">
-      <h1>Rsbuild with React</h1>
+    <div className="content" style={{padding: '2rem'}}>
+      <h1 style={{textAlign: "center"}}>Nested CheckBox with Indeterminate</h1>
       <NestedCheckBox data={state} />
     </div>
   );

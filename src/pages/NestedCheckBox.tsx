@@ -10,29 +10,28 @@ interface NestedCheckBoxProps {
 type checboxState = Record<string, boolean>
 
 const NestedCheckBox: React.FC<NestedCheckBoxProps> = ({ data }) => {
-    const [inputState, setInputState] = useState<checboxState | {}>({});
+    const [inputState, setInputState] = useState<checboxState | {}>({
+        '1': true,
+        '2': false,
+        "3": 'indeterminate'
+    });
 
     const renderTree = (dataTree: NestedCheckBoxData) => {
         return (
             <div className='renderTreeWrap'>
                 {dataTree?.map(item => {
-                    const { id = "", name = "", children = [] } = item;
+                    const { id = "", name = "", children = [], status = false } = item;
 
                     return (
                         <div className="itemWrap" key={id}>
-                            <CheckBox label={name}/>
-                          
-
+                            <CheckBox label={name} status={status} id={id}/>
                             {isArrayAndArrayHasLength(children) &&
-
-                                <div className="itemChildrenWrap">
+                                <div className="itemChildrenWrap" style={{paddingLeft: "1rem"}}>
                                     {renderTree(children)}
                                 </div>
-
                             }
                         </div>
                     )
-
                 })}
             </div>
         )
