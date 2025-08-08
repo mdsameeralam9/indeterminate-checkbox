@@ -10,11 +10,6 @@ interface NestedCheckBoxProps {
 type checboxState = Record<string, boolean>
 
 const NestedCheckBox: React.FC<NestedCheckBoxProps> = ({ data }) => {
-    const [inputState, setInputState] = useState<checboxState | {}>({
-        '1': true,
-        '2': false,
-        "3": 'indeterminate'
-    });
 
     const renderTree = (dataTree: NestedCheckBoxData) => {
         return (
