@@ -9,17 +9,18 @@ interface NestedCheckBoxProps {
 
 type checboxState = Record<string, boolean>
 
+
 const NestedCheckBox: React.FC<NestedCheckBoxProps> = ({ data }) => {
 
     const renderTree = (dataTree: NestedCheckBoxData[]) => {
         return (
             <div className='renderTreeWrap'>
                 {dataTree.map((item: NestedCheckBoxData) => {
-                    const { id = "", name = "", children = [], status = "false" } = item;
+                    const { id = "", name = "", children = [] } = item;
 
                     return (
                         <div className="itemWrap" key={id}>
-                            <CheckBox label={name} status={status} id={id}/>
+                            <CheckBox label={name} id={id}/>
                             {isArrayAndArrayHasLength(children) &&
                                 <div className="itemChildrenWrap" style={{paddingLeft: "1rem"}}>
                                     {renderTree(children)}
