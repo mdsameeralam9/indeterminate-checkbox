@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from 'react';
 import type { NestedCheckBoxDataInterface } from '../data/types'; // Ensure this type exists and is exported in ../data/types
-import { isArrayAndArrayHasLength } from '../util';
+import { isArrayAndArrayHasLength } from '../util/util';
 import CheckBox from '../components/CheckBox';
 import useMutation from '../hooks/useMutation';
 

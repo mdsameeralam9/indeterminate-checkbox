@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { nestedCheckboxData } from "../data/checkboxData";
 import type { NestedCheckBoxDataInterface } from "../data/types";
-import { addInputStatus, isArrayAndArrayHasLength } from "../util";
+import { addInputStatus, isArrayAndArrayHasLength } from "../util/util";
 import type { CheckboxStatus } from "../data/types";
 
 // Update all children recursively
