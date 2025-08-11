@@ -1,6 +1,6 @@
-import type { NestedCheckBoxData } from "./types";
+import type { NestedCheckBoxDataInterface } from "./types";
 
-export const nestedCheckboxData: NestedCheckBoxData[] = [
+export const nestedCheckboxData: NestedCheckBoxDataInterface[] = [
     {
         id: '1',
         name: 'Electronics',

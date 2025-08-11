@@ -4,9 +4,10 @@ interface CheckBoxProps {
     label?: string;
     status?: string;
     id:string;
+    updateCheckBoxState: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const CheckBox: React.FC<CheckBoxProps> = ({ label = "", status = '', id='' }) => {
+const CheckBox: React.FC<CheckBoxProps> = ({ label = "", status = '', updateCheckBoxState=()=>{} }) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -15,10 +16,6 @@ const CheckBox: React.FC<CheckBoxProps> = ({ label = "", status = '', id='' }) =
         }
     }, [status]);
 
-    const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>, id:string) => {
-        
-    }
-
     return (
         <div className='inputComponent'>
             <label>
@@ -26,7 +23,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({ label = "", status = '', id='' }) =
                   type='checkbox' 
                   ref={inputRef} 
                   checked={status === 'checked'}
-                  onChange={(e) => handleInputChange(e, id)}
+                  onChange={updateCheckBoxState}
                 />
                 <span>{label}</span>
             </label>

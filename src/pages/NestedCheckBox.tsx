@@ -1,41 +1,39 @@
-import { Fragment, useState } from 'react';
-import type { NestedCheckBoxData } from '../data/types';
+import type { FC, ReactNode } from 'react';
+import type { NestedCheckBoxDataInterface } from '../data/types'; // Ensure this type exists and is exported in ../data/types
 import { isArrayAndArrayHasLength } from '../util';
 import CheckBox from '../components/CheckBox';
+import useMutation from '../hooks/useMutation';
 
-interface NestedCheckBoxProps {
-    data: NestedCheckBoxData[]
-}
+const NestedCheckBox: FC = () => {
+    const { checkBoxState, updateCheckState } = useMutation();
 
-type checboxState = Record<string, boolean>
+    const updateCheckBoxState = (isChecked: boolean = false, id: string = ''): void => {
+        updateCheckState(isChecked, id);
+    };
 
-
-const NestedCheckBox: React.FC<NestedCheckBoxProps> = ({ data }) => {
-
-    const renderTree = (dataTree: NestedCheckBoxData[]) => {
-        return (
-            <div className='renderTreeWrap'>
-                {dataTree.map((item: NestedCheckBoxData) => {
-                    const { id = "", name = "", children = [] } = item;
-
-                    return (
-                        <div className="itemWrap" key={id}>
-                            <CheckBox label={name} id={id}/>
-                            {isArrayAndArrayHasLength(children) &&
-                                <div className="itemChildrenWrap" style={{paddingLeft: "1rem"}}>
-                                    {renderTree(children)}
-                                </div>
-                            }
+    const renderTree = (dataTree: NestedCheckBoxDataInterface[]): ReactNode => (
+        <div className="renderTreeWrap">
+            {dataTree?.map(({ id = '', name = '', children = [], status = '' }: NestedCheckBoxDataInterface) => (
+                <div className="itemWrap" key={id}>
+                    <CheckBox
+                        label={name}
+                        id={id}
+                        status={status}
+                        updateCheckBoxState={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            updateCheckBoxState(e.target.checked, id)
+                        }
+                    />
+                    {isArrayAndArrayHasLength(children) && (
+                        <div className="itemChildrenWrap" style={{ paddingLeft: '1rem' }}>
+                            {renderTree(children)}
                         </div>
-                    )
-                })}
-            </div>
-        )
-    }
+                    )}
+                </div>
+            ))}
+        </div>
+    );
 
-    return (
-        <div className='nestedCheckBoxComponent'>{renderTree(data)}</div>
-    )
-}
+    return <div className="nestedCheckBoxComponent">{renderTree(checkBoxState)}</div>;
+};
 
-export default NestedCheckBox
+export default NestedCheckBox;

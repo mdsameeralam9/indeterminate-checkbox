@@ -1,5 +1,8 @@
-export interface NestedCheckBoxData {
+export interface NestedCheckBoxDataInterface {
     id: string;
     name: string;
-    children?: NestedCheckBoxData[];
+    status?:string;
+    children?: NestedCheckBoxDataInterface[];
 }
+
+export type CheckboxStatus = "checked" | "unchecked" | "indeterminate";
