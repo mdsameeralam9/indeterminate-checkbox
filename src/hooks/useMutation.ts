@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { nestedCheckboxData } from "../data/checkboxData";
 import type { NestedCheckBoxDataInterface } from "../data/types";
-import { addInputStatus } from "../util";
+import { addInputStatus, isArrayAndArrayHasLength } from "../util";
 import type { CheckboxStatus } from "../data/types";
 
 // Update all children recursively
@@ -13,7 +13,7 @@ const updateChild = (
     const updatedItem: NestedCheckBoxDataInterface = {
       ...item,
       status: isChecked ? "checked" : "unchecked",
-      children: item.children
+      children: isArrayAndArrayHasLength(item.children)
         ? updateChild(item.children, isChecked)
         : undefined,
     };
@@ -25,14 +25,14 @@ const updateChild = (
 const updateParentStatus = (
   parent: NestedCheckBoxDataInterface | null
 ): CheckboxStatus | undefined => {
-  if (!parent || !parent.children || parent.children.length === 0){
+  if (!parent || !isArrayAndArrayHasLength(parent.children)){
     return parent?.status as CheckboxStatus | undefined;
   }
 
-  const allChecked = parent.children.every(
+  const allChecked = parent.children!.every(
     (child) => child.status === "checked"
   );
-  const allUnchecked = parent.children.every(
+  const allUnchecked = parent.children!.every(
     (child) => child.status === "unchecked"
   );
 
@@ -58,7 +58,7 @@ const useMutation = () => {
           const updatedNode: NestedCheckBoxDataInterface = {
             ...node,
             status: isTrue ? "checked" : "unchecked",
-            children: node.children
+            children: isArrayAndArrayHasLength(node.children)
               ? updateChild(node.children, isTrue)
               : undefined,
           };
@@ -66,8 +66,8 @@ const useMutation = () => {
         }
 
         // Recursively update children
-        let updatedChildren = node.children
-          ? updateTree(node.children, selectedId, isTrue)
+        let updatedChildren = isArrayAndArrayHasLength(node.children)
+          ? updateTree(node.children as NestedCheckBoxDataInterface[], selectedId, isTrue)
           : undefined;
 
         // After updating children, update this node's status
